@@ -1,0 +1,555 @@
+/* =============================
+      GLOBAL THEME — F1 BLACK/RED
+   ============================= */
+:root {
+    --bg: #08080a;
+    --bg2: #111114;
+    --card: #161618;
+    --card-light: #1e1e22;
+
+    --border: rgba(255, 255, 255, 0.06);
+    --text: #f2f2f5;
+    --muted: #9a9a9e;
+
+    --accent: #d90429;           /* F1 red */
+    --accent-dark: #a5031f;
+    --accent-glow: rgba(217, 4, 41, 0.55);
+    --accent-glow-light: rgba(217, 4, 41, 0.25);
+
+    --carbon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 10 10'%3E%3Crect width='5' height='5' fill='%23000000'/%3E%3Crect x='5' y='5' width='5' height='5' fill='%23000000'/%3E%3C/svg%3E");
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* =============================
+            BODY
+   ============================= */
+body {
+    font-family: "Inter", "Roboto", Arial, sans-serif;
+    background: var(--bg) var(--carbon);
+    background-size: 120px 120px;
+    color: var(--text);
+    margin: 0;
+    padding: 24px;
+
+    animation: bg-shift 40s infinite linear;
+}
+
+@keyframes bg-shift {
+    from { background-position: 0 0; }
+    to   { background-position: 600px 600px; }
+}
+
+/* =============================
+        GRID LAYOUT FIXED
+   ============================= */
+main {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column; /* сверху вниз */
+    gap: 20px;
+    min-height: 85vh;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap; /* перенос на маленьких экранах */
+}
+
+#authSection {
+    flex: 0 0 auto;
+    min-width: 280px;  /* минимальная ширина */
+    max-width: 350px;  /* ограничение сверху */
+    padding: 12px 16px;
+}
+
+
+.table-wrap, 
+#rating-table {
+    width: 100%;
+}
+
+table {
+    width: 100%;
+}
+
+
+/* =============================
+            CARD
+   ============================= */
+.card {
+    background: var(--card-light);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 0 22px rgba(255, 0, 0, 0.07);
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* glowing diagonal line like F1 TV style */
+.card::before {
+    content: "";
+    position: absolute;
+    width: 160%;
+    height: 2px;
+    top: 0;
+    left: -30%;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.8;
+    animation: f1-line 6s infinite linear;
+}
+
+@keyframes f1-line {
+    0% { transform: translateX(-30%); }
+    100% { transform: translateX(130%); }
+}
+
+.card h2 {
+    margin-top: 0;
+    color: var(--accent);
+    font-weight: 700;
+    border-left: 4px solid var(--accent);
+    padding-left: 10px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 6px var(--accent-glow);
+    animation: fade-in 0.4s ease-out;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =============================
+           TABLE
+   ============================= */
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    transition: 0.2s;
+}
+
+th {
+    color: var(--muted);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+tr:hover td {
+    background: rgba(217, 4, 41, 0.08);
+    transform: translateX(2px);
+}
+
+/* row slide-in */
+tbody tr {
+    animation: row-appear 0.3s ease forwards;
+    opacity: 0;
+}
+@keyframes row-appear {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =============================
+        SELECT / INPUT
+   ============================= */
+select, 
+input[type="number"], 
+input[type="text"], 
+input[type="password"] {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg2);
+    color: var(--text);
+    outline: none;
+    transition: 0.15s;
+}
+
+select:focus,
+input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 8px var(--accent-glow);
+    transform: scale(1.02);
+}
+
+/* floating label effect */
+select:hover,
+input:hover {
+    background: #19191d;
+}
+
+/* =============================
+            BUTTONS
+   ============================= */
+button {
+    background: var(--accent);
+    border: none;
+    padding: 9px 16px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+    letter-spacing: 0.3px;
+    position: relative;
+    overflow: hidden;
+}
+
+button:hover {
+    background: var(--accent-dark);
+    box-shadow: 0 0 16px var(--accent-glow);
+    transform: translateY(-2px);
+}
+
+/* F1 speed flash */
+button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transform: skewX(-15deg);
+    transition: 0.35s;
+}
+
+button:hover::after {
+    left: 120%;
+}
+
+/* =============================
+          RECENT TABLE
+   ============================= */
+#recent-tbody tr:hover td {
+    background: rgba(255, 0, 0, 0.07);
+}
+
+/* =============================
+        AUTH AREA
+   ============================= */
+#authSection input {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 6px 10px;
+    font-size: 14px;
+}
+
+#loginSection button,
+#logoutSection button {
+    margin-top: 10px;
+}
+
+/* =============================
+        MOBILE ADAPTATION
+   ============================= */
+@media (max-width: 900px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =============================
+        SCROLLBAR STYLING
+   ============================= */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg2);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-dark);
+}
+
+/* =============================
+        F1 TOOLTIP
+   ============================= */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: var(--card-light);
+    color: var(--text);
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 10;
+    bottom: 125%; 
+    left: 50%;
+    margin-left: -80px;
+    opacity: 0;
+    transition: opacity 0.25s;
+    box-shadow: 0 0 12px var(--accent-glow);
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* =============================
+      ENTRY ANIMATIONS
+   ============================= */
+.fade-in {
+    animation: fadein 0.5s ease;
+}
+@keyframes fadein {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in {
+    animation: slidein 0.4s ease;
+}
+@keyframes slidein {
+    from { opacity: 0; transform: translateX(-8px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+/* =============================
+        AUTH COMPACT MODE
+   ============================= */
+
+#authSection h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.card.auth-card {
+    overflow: visible; /* разрешаем показывать весь контент */
+}
+
+#authSection input {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 6px 10px;
+    font-size: 14px;
+}
+
+#authSection button {
+    width: 100%;
+    padding: 7px 0;
+    font-size: 14px;
+    margin-top: 6px;
+}
+
+#loginSection,
+#logoutSection {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#logoutSection strong {
+    color: var(--accent);
+}
+
+#authSection {
+    background: var(--card-light);
+    border-left: 3px solid var(--accent);
+    box-shadow: 0 0 12px rgba(217, 4, 41, 0.15);
+    flex: 0 0 auto;
+    min-width: 280px;
+    max-width: 350px;
+    padding: 12px 16px;
+    overflow: visible;
+}
+/* ============================================
+      F1 BACKGROUND IMAGE BLOCK (LEFT SIDE)
+   ============================================ */
+.left-image-area {
+    flex: 1; /* растягиваем на оставшееся пространство */
+    min-width: 200px;
+    height: 250px; /* увеличиваем видимую высоту */
+    border-radius: 14px;
+    background-image: url("img/f1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.55);
+}
+
+
+/* Немного динамики */
+@keyframes f1Zoom {
+    from { transform: scale(1); }
+    to   { transform: scale(1.07); }
+}
+
+/* ==== F1-Style score colors ==== */
+.score-green {
+    color: #00e676; /* зеленый */
+    font-weight: 700;
+    text-shadow: 0 0 6px rgba(0, 230, 118, 0.4);
+}
+
+.score-red {
+    color: #ff1744; /* красный */
+    font-weight: 700;
+    text-shadow: 0 0 6px rgba(255, 23, 68, 0.4);
+}
+
+.score-yellow {
+    color: #ffea00; /* нейтрально */
+    font-weight: 700;
+    text-shadow: 0 0 6px rgba(255, 234, 0, 0.4);
+}
+
+/* =======================================
+      BLACK–RED SCREENSHOT MODE
+   ======================================= */
+.screenshot-mode {
+    background: #0a0a0c !important; /* чёрный фон */
+    color: #f2f2f5 !important;       /* белый текст */
+}
+
+.screenshot-mode table,
+.screenshot-mode th,
+.screenshot-mode td {
+    background: #161618 !important;     /* тёмно-серый */
+    color: #f2f2f5 !important;
+    border-color: rgba(255, 0, 0, 0.25) !important;
+}
+
+.screenshot-mode tr:hover td {
+    background: #161618 !important;     /* отключаем hover */
+}
+
+.screenshot-mode button {
+    display: none !important; /* кнопки не попадают в скрин */
+}
+
+/* усиливаем красный акцент */
+.screenshot-mode .accent,
+.screenshot-mode h2 {
+    color: #d90429 !important;
+}
+
+
+
+/* =============================
+            MISC
+   ============================= */
+
+
+.tabs {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    margin-top: 20px; /* отделяем от верхнего блока */
+}
+
+
+.tab-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: var(--card-light);
+    border: 1px solid var(--border);
+    color: var(--text);
+    cursor: pointer;
+    transition: 0.2s;
+    font-weight: 600;
+}
+
+.tab-btn.active {
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
+    color: white;
+}
+
+.tab-btn:hover {
+    background: var(--accent-dark);
+    color: white;
+}
+
+.info-block {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 16px;
+    align-items: center;
+    margin-top: 14px;
+}
+
+.info-block img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 0 18px rgba(217, 4, 41, 0.3);
+    transition: transform 0.4s ease;
+}
+
+.info-block img:hover {
+    transform: scale(1.05);
+}
+
+/* =============================
+   GRID COLUMNS FIX
+============================= */
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Центр — только картинка */
+.center-column {
+    justify-content: center;
+}
+
+/* Авторизация строго в своей колонке */
+.left-column {
+    align-items: stretch;
+}
+
+/* Правая колонка */
+.right-column {
+    align-items: stretch;
+}
+
+#ratings-tab {
+    display: grid;
+    grid-template-columns: 6.0fr 5.0fr;
+    gap: 20px;
+}
+
+.tab-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* две колонки для таблиц */
+    gap: 20px;
+}
+
+.tab-content.hidden > * {
+    display: none;
+}
+
